@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("sqlserver://DESKTOP-IPDB6V8\MAI074:1433;database=QuanLyXuatNhapCang;user=sa;password=12345;encrypt=true")
+}
+
+model QuocGia {
+  ID    Int       @id @default(autoincrement())
+  Ten   String
+  CangDen CangDen[]
+}
+
+model HangTau {
+  ID   Int    @id @default(autoincrement())
+  Ten  String
+  Tau  Tau[]
+}
+
+model LoaiHang {
+  ID       Int       @id @default(autoincrement())
+  Ten      String
+  DonHang  DonHang[]
+}
+
+model ChucVu {
+  ID           Int            @id @default(autoincrement())
+  Ten          String
+  UserAccounts UserAccount[]
+}
+
+model Kho {
+  ID   Int   @id @default(autoincrement())
+  Ten  String
+  LoaiKho String
+  Khu   Khu[]
+}
+
+model ChungTu {
+  ID               Int              @id @default(autoincrement())
+  Ten              String
+  DonHangChungTus  DonHangChungTu[]
+}
+
+model CangDen {
+  ID          Int       @id @default(autoincrement())
+  Ten         String
+  IDQuocGia   Int
+  QuocGia     QuocGia   @relation(fields: [IDQuocGia], references: [ID])
+  DonHangs    DonHang[]
+}
+
+model Tau {
+  ID         Int       @id @default(autoincrement())
+  Ten        String
+  IDHangTau  Int
+  HangTau    HangTau   @relation(fields: [IDHangTau], references: [ID])
+  SoChuyenTau SoChuyenTau[]
+}
+
+model Khu {
+  ID     Int    @id @default(autoincrement())
+  Ten    String
+  IDKho  Int
+  Kho    Kho    @relation(fields: [IDKho], references: [ID])
+  ContainerDonHangs Container_DonHang[]
+}
+
+model SoChuyenTau {
+  ID          Int       @id @default(autoincrement())
+  MaChuyenTau String
+  ThoiGian    DateTime
+  IDTau       Int
+  Tau         Tau       @relation(fields: [IDTau], references: [ID])
+  DonHangs    DonHang[]
+}
+
+model UserAccount {
+  ID           Int       @id @default(autoincrement())
+  Ten          String
+  IDChucVu     Int
+  MatKhau      String
+  NgaySinh     DateTime
+  GioiTinh     String
+  CCCD         String
+  SDT          String
+  Email        String
+  DiaChi       String
+  TrangThai    String
+  ChucVu       ChucVu    @relation(fields: [IDChucVu], references: [ID])
+  DonHangs     DonHang[]
+  ThongBaos    ThongBao[]
+}
+
+model TrangThaiDonHang {
+  Ma        String    @id
+  Ten       String
+  MoTa      String?
+  DonHangs  DonHang[]
+}
+
+model DonHang {
+  ID                 Int               @id @default(autoincrement())
+  MaVanDon           String
+  IDCangDen          Int
+  IDSoChuyenTau      Int
+  IDLoaiHang         Int
+  IDUser             Int
+  MaTrangThai        String
+  KieuDon            String
+  LoaiDon            String
+  SoToKhaiHaiQuan    String
+  CanNang            Float
+  KichThuoc          String
+  ThoiGianXuatHang   DateTime
+  ThoiGianTaoDon     DateTime
+  NguoiNhan          String
+  NgayNhapKho        DateTime
+  CangDen            CangDen           @relation(fields: [IDCangDen], references: [ID])
+  SoChuyenTau        SoChuyenTau       @relation(fields: [IDSoChuyenTau], references: [ID])
+  LoaiHang           LoaiHang          @relation(fields: [IDLoaiHang], references: [ID])
+  UserAccount        UserAccount       @relation(fields: [IDUser], references: [ID])
+  TrangThaiDonHang   TrangThaiDonHang  @relation(fields: [MaTrangThai], references: [Ma])
+  ContainerDonHangs  Container_DonHang[]
+  DonHangChungTus    DonHangChungTu[]
+  ThongBaos          ThongBao[]
+}
+
+model Container {
+  ID                Int                 @id @default(autoincrement())
+  SoHieu            String
+  Loai              String
+  ContainerDonHangs Container_DonHang[]
+}
+
+model Container_DonHang {
+  IDContainer Int
+  IDDonHang   Int
+  IDKhu       Int
+
+  Container  Container  @relation(fields: [IDContainer], references: [ID])
+  DonHang    DonHang    @relation(fields: [IDDonHang], references: [ID])
+  Khu        Khu        @relation(fields: [IDKhu], references: [ID])
+
+  @@id([IDContainer, IDDonHang, IDKhu])
+}
+
+model ThongBao {
+  ID         Int       @id @default(autoincrement())
+  IDUser     Int
+  IDDonHang  Int
+  NoiDung    String
+  ThoiGian   DateTime
+  UserAccount UserAccount @relation(fields: [IDUser], references: [ID])
+  DonHang     DonHang     @relation(fields: [IDDonHang], references: [ID])
+}
+
+model DonHangChungTu {
+  IDChungTu  Int
+  IDDonHang  Int
+  Files      String
+
+  ChungTu    ChungTu  @relation(fields: [IDChungTu], references: [ID])
+  DonHang    DonHang  @relation(fields: [IDDonHang], references: [ID])
+
+  @@id([IDChungTu, IDDonHang])
+}
