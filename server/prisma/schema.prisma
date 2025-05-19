@@ -4,134 +4,134 @@ generator client {
 
 datasource db {
   provider = "sqlserver"
-  url      = env("sqlserver://DESKTOP-IPDB6V8\MAI074:1433;database=QuanLyXuatNhapCang;user=sa;password=12345;encrypt=true")
+  url      = "sqlserver://localhost:1433;database=QuanLyXuatNhapCang;user=sa;password=12345;encrypt=false;trustServerCertificate=true"
 }
 
 model QuocGia {
-  ID    Int       @id @default(autoincrement())
-  Ten   String
+  ID      Int       @id(map: "PK__QuocGia__3214EC27A5607428") @default(autoincrement())
+  Ten     String?   @db.NVarChar(100)
   CangDen CangDen[]
 }
 
 model HangTau {
-  ID   Int    @id @default(autoincrement())
-  Ten  String
-  Tau  Tau[]
+  ID  Int     @id(map: "PK__HangTau__3214EC27035AAA5E") @default(autoincrement())
+  Ten String? @db.NVarChar(100)
+  Tau Tau[]
 }
 
 model LoaiHang {
-  ID       Int       @id @default(autoincrement())
-  Ten      String
-  DonHang  DonHang[]
+  ID      Int       @id(map: "PK__LoaiHang__3214EC278BA7AFE2") @default(autoincrement())
+  Ten     String?   @db.NVarChar(100)
+  DonHang DonHang[]
 }
 
 model ChucVu {
-  ID           Int            @id @default(autoincrement())
-  Ten          String
+  ID           Int           @id(map: "PK__ChucVu__3214EC277319B700") @default(autoincrement())
+  Ten          String?       @db.NVarChar(100)
   UserAccounts UserAccount[]
 }
 
 model Kho {
-  ID   Int   @id @default(autoincrement())
-  Ten  String
-  LoaiKho String
-  Khu   Khu[]
+  ID      Int     @id(map: "PK__Kho__3214EC273196AC98") @default(autoincrement())
+  Ten     String? @db.NVarChar(100)
+  LoaiKho String? @db.NVarChar(50)
+  Khu     Khu[]
 }
 
 model ChungTu {
-  ID               Int              @id @default(autoincrement())
-  Ten              String
-  DonHangChungTus  DonHangChungTu[]
+  ID              Int               @id(map: "PK__ChungTu__3214EC27378B4FE7") @default(autoincrement())
+  Ten             String?           @db.NVarChar(100)
+  DonHang_ChungTu DonHang_ChungTu[]
 }
 
 model CangDen {
-  ID          Int       @id @default(autoincrement())
-  Ten         String
-  IDQuocGia   Int
-  QuocGia     QuocGia   @relation(fields: [IDQuocGia], references: [ID])
-  DonHangs    DonHang[]
-}
-
-model Tau {
-  ID         Int       @id @default(autoincrement())
-  Ten        String
-  IDHangTau  Int
-  HangTau    HangTau   @relation(fields: [IDHangTau], references: [ID])
-  SoChuyenTau SoChuyenTau[]
-}
-
-model Khu {
-  ID     Int    @id @default(autoincrement())
-  Ten    String
-  IDKho  Int
-  Kho    Kho    @relation(fields: [IDKho], references: [ID])
-  ContainerDonHangs Container_DonHang[]
-}
-
-model SoChuyenTau {
-  ID          Int       @id @default(autoincrement())
-  MaChuyenTau String
-  ThoiGian    DateTime
-  IDTau       Int
-  Tau         Tau       @relation(fields: [IDTau], references: [ID])
-  DonHangs    DonHang[]
-}
-
-model UserAccount {
-  ID           Int       @id @default(autoincrement())
-  Ten          String
-  IDChucVu     Int
-  MatKhau      String
-  NgaySinh     DateTime
-  GioiTinh     String
-  CCCD         String
-  SDT          String
-  Email        String
-  DiaChi       String
-  TrangThai    String
-  ChucVu       ChucVu    @relation(fields: [IDChucVu], references: [ID])
-  DonHangs     DonHang[]
-  ThongBaos    ThongBao[]
-}
-
-model TrangThaiDonHang {
-  Ma        String    @id
-  Ten       String
-  MoTa      String?
+  ID        Int       @id(map: "PK__CangDen__3214EC27EDDB675D") @default(autoincrement())
+  Ten       String?   @db.NVarChar(100)
+  IDQuocGia Int?
+  QuocGia   QuocGia?  @relation(fields: [IDQuocGia], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__CangDen__IDQuocG__4316F928")
   DonHangs  DonHang[]
 }
 
+model Tau {
+  ID          Int           @id(map: "PK__Tau__3214EC27E226FDCC") @default(autoincrement())
+  Ten         String?       @db.NVarChar(100)
+  IDHangTau   Int?
+  SoChuyenTau SoChuyenTau[]
+  HangTau     HangTau?      @relation(fields: [IDHangTau], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__Tau__IDHangTau__45F365D3")
+}
+
+model Khu {
+  ID                Int                 @id(map: "PK__Khu__3214EC27086A9405") @default(autoincrement())
+  Ten               String?             @db.NVarChar(100)
+  IDKho             Int?
+  ContainerDonHangs Container_DonHang[]
+  Kho               Kho?                @relation(fields: [IDKho], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__Khu__IDKho__48CFD27E")
+}
+
+model SoChuyenTau {
+  ID          Int       @id(map: "PK__SoChuyen__3214EC27D0282F9F") @default(autoincrement())
+  MaChuyenTau String?   @db.NVarChar(100)
+  IDTau       Int?
+  ThoiGian    DateTime? @db.DateTime
+  DonHangs    DonHang[]
+  Tau         Tau?      @relation(fields: [IDTau], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__SoChuyenT__IDTau__4BAC3F29")
+}
+
+model UserAccount {
+  ID        Int        @id(map: "PK__UserAcco__3214EC2715C8D1A8") @default(autoincrement())
+  Ten       String?    @db.NVarChar(100)
+  IDChucVu  Int?
+  MatKhau   String?    @db.NVarChar(100)
+  NgaySinh  DateTime?  @db.Date
+  GioiTinh  String?    @db.NVarChar(10)
+  CCCD      String?    @db.NVarChar(20)
+  SDT       String?    @db.NVarChar(20)
+  Email     String?    @db.NVarChar(100)
+  DiaChi    String?    @db.NVarChar(200)
+  TrangThai String?    @db.NVarChar(50)
+  DonHangs  DonHang[]
+  ThongBaos ThongBao[]
+  ChucVu    ChucVu?    @relation(fields: [IDChucVu], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__UserAccou__IDChu__4E88ABD4")
+}
+
+model TrangThaiDonHang {
+  Ma       String    @id(map: "PK__TrangTha__3214CC9F5FC69161") @db.NVarChar(50)
+  Ten      String?   @db.NVarChar(100)
+  MoTa     String?   @db.NVarChar(255)
+  DonHangs DonHang[]
+}
+
 model DonHang {
-  ID                 Int               @id @default(autoincrement())
-  MaVanDon           String
-  IDCangDen          Int
-  IDSoChuyenTau      Int
-  IDLoaiHang         Int
-  IDUser             Int
-  MaTrangThai        String
-  KieuDon            String
-  LoaiDon            String
-  SoToKhaiHaiQuan    String
-  CanNang            Float
-  KichThuoc          String
-  ThoiGianXuatHang   DateTime
-  ThoiGianTaoDon     DateTime
-  NguoiNhan          String
-  NgayNhapKho        DateTime
-  CangDen            CangDen           @relation(fields: [IDCangDen], references: [ID])
-  SoChuyenTau        SoChuyenTau       @relation(fields: [IDSoChuyenTau], references: [ID])
-  LoaiHang           LoaiHang          @relation(fields: [IDLoaiHang], references: [ID])
-  UserAccount        UserAccount       @relation(fields: [IDUser], references: [ID])
-  TrangThaiDonHang   TrangThaiDonHang  @relation(fields: [MaTrangThai], references: [Ma])
-  ContainerDonHangs  Container_DonHang[]
-  DonHangChungTus    DonHangChungTu[]
-  ThongBaos          ThongBao[]
+  ID                Int                 @id(map: "PK__DonHang__3214EC270063863C") @default(autoincrement())
+  MaVanDon          String?             @db.NVarChar(100)
+  IDCangDen         Int?
+  IDSoChuyenTau     Int?
+  IDLoaiHang        Int?
+  IDUser            Int?
+  MaTrangThai       String?             @db.NVarChar(50)
+  KieuDon           String?             @db.NVarChar(50)
+  LoaiDon           String?             @db.NVarChar(50)
+  SoToKhaiHaiQuan   String?             @db.NVarChar(100)
+  CanNang           Float?
+  KichThuoc         String?             @db.NVarChar(100)
+  ThoiGianXuatHang  DateTime?           @db.DateTime
+  ThoiGianTaoDon    DateTime?           @db.DateTime
+  NguoiNhan         String?             @db.NVarChar(100)
+  NgayNhapKho       DateTime?           @db.DateTime
+  ContainerDonHangs Container_DonHang[]
+  CangDen           CangDen?            @relation(fields: [IDCangDen], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__DonHang__IDCangD__534D60F1")
+  LoaiHang          LoaiHang?           @relation(fields: [IDLoaiHang], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__DonHang__IDLoaiH__5535A963")
+  SoChuyenTau       SoChuyenTau?        @relation(fields: [IDSoChuyenTau], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__DonHang__IDSoChu__5441852A")
+  UserAccount       UserAccount?        @relation(fields: [IDUser], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__DonHang__IDUser__5629CD9C")
+  TrangThaiDonHang  TrangThaiDonHang?   @relation(fields: [MaTrangThai], references: [Ma], onDelete: NoAction, onUpdate: NoAction, map: "FK__DonHang__MaTrang__571DF1D5")
+  DonHang_ChungTu   DonHang_ChungTu[]
+  ThongBaos         ThongBao[]
 }
 
 model Container {
-  ID                Int                 @id @default(autoincrement())
-  SoHieu            String
-  Loai              String
+  ID                Int                 @id(map: "PK__Containe__3214EC272B6F1DB6") @default(autoincrement())
+  SoHieu            String?             @db.NVarChar(100)
+  Loai              String?             @db.NVarChar(50)
   ContainerDonHangs Container_DonHang[]
 }
 
@@ -139,31 +139,29 @@ model Container_DonHang {
   IDContainer Int
   IDDonHang   Int
   IDKhu       Int
+  Container   Container @relation(fields: [IDContainer], references: [ID], onUpdate: NoAction, map: "FK__Container__IDCon__5BE2A6F2")
+  DonHang     DonHang   @relation(fields: [IDDonHang], references: [ID], onUpdate: NoAction, map: "FK__Container__IDDon__5CD6CB2B")
+  Khu         Khu       @relation(fields: [IDKhu], references: [ID], onUpdate: NoAction, map: "FK__Container__IDKhu__5DCAEF64")
 
-  Container  Container  @relation(fields: [IDContainer], references: [ID])
-  DonHang    DonHang    @relation(fields: [IDDonHang], references: [ID])
-  Khu        Khu        @relation(fields: [IDKhu], references: [ID])
-
-  @@id([IDContainer, IDDonHang, IDKhu])
+  @@id([IDContainer, IDDonHang, IDKhu], map: "PK__Containe__D1DC230B6A051FBF")
 }
 
 model ThongBao {
-  ID         Int       @id @default(autoincrement())
-  IDUser     Int
-  IDDonHang  Int
-  NoiDung    String
-  ThoiGian   DateTime
-  UserAccount UserAccount @relation(fields: [IDUser], references: [ID])
-  DonHang     DonHang     @relation(fields: [IDDonHang], references: [ID])
+  ID          Int          @id(map: "PK__ThongBao__3214EC271B7548E9") @default(autoincrement())
+  IDUser      Int?
+  IDDonHang   Int?
+  NoiDung     String?      @db.NVarChar(500)
+  ThoiGian    DateTime?    @db.DateTime
+  DonHang     DonHang?     @relation(fields: [IDDonHang], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__ThongBao__IDDonH__619B8048")
+  UserAccount UserAccount? @relation(fields: [IDUser], references: [ID], onDelete: NoAction, onUpdate: NoAction, map: "FK__ThongBao__IDUser__60A75C0F")
 }
 
-model DonHangChungTu {
-  IDChungTu  Int
-  IDDonHang  Int
-  Files      String
+model DonHang_ChungTu {
+  IDChungTu Int
+  IDDonHang Int
+  Files     String? @db.NVarChar(255)
+  ChungTu   ChungTu @relation(fields: [IDChungTu], references: [ID], onUpdate: NoAction, map: "FK__DonHang_C__IDChu__6477ECF3")
+  DonHang   DonHang @relation(fields: [IDDonHang], references: [ID], onUpdate: NoAction, map: "FK__DonHang_C__IDDon__656C112C")
 
-  ChungTu    ChungTu  @relation(fields: [IDChungTu], references: [ID])
-  DonHang    DonHang  @relation(fields: [IDDonHang], references: [ID])
-
-  @@id([IDChungTu, IDDonHang])
+  @@id([IDChungTu, IDDonHang], map: "PK__DonHang___852AE73FD06FFBAF")
 }
