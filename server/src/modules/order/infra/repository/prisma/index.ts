@@ -49,6 +49,7 @@ export class PrismaDonHangRepository implements IDonHangRepository {
     ORDER BY 
       tuan, kieuDon
   `;
+    console.log(raws);
     return raws;
   }
   async getListDonHang(

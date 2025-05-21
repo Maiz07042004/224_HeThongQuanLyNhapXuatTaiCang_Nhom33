@@ -20,7 +20,7 @@ export class thongKeDonHangTheoTuanQueryHandle
 
     const result: ThongKeDonHangTheoTuanDTO[] = [];
 
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 5; i++) {
       const nhap =
         rawData.find((r) => r.tuan === i && r.kieuDon === "Nhập khẩu")?.count ||
         0;

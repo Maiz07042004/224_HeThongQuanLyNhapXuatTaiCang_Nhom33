@@ -29,7 +29,11 @@ export class DonHangHttpService {
         nam,
       });
 
+      const totalNhap = result.reduce((acc, cur) => acc + cur.nhap, 0);
+      const totalXuat = result.reduce((acc, cur) => acc + cur.xuat, 0);
       res.status(200).json({
+        totalNhap,
+        totalXuat,
         data: result,
       });
     } catch (error) {
@@ -48,8 +52,11 @@ export class DonHangHttpService {
         thang,
         nam,
       });
-
+      const totalNhap = result.reduce((acc, cur) => acc + cur.nhap, 0);
+      const totalXuat = result.reduce((acc, cur) => acc + cur.xuat, 0);
       res.status(200).json({
+        totalNhap,
+        totalXuat,
         data: result,
       });
     } catch (error) {
