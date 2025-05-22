@@ -33,23 +33,26 @@ export class PrismaDonHangRepository implements IDonHangRepository {
     thang: number,
     nam: number
   ): Promise<ThongKeDonHangTheoTuanRawDTO[]> {
+    const startDate = new Date(`${nam}-${thang}-01`);
+    const endDate = new Date(startDate);
+    endDate.setMonth(startDate.getMonth() + 1);
+
     const raws: ThongKeDonHangTheoTuanRawDTO[] = await this.prisma.$queryRaw`
-    SELECT 
-      -- Tính tuần trong tháng: ((ngày trong tháng - 1) / 7) + 1
-      ((DAY(ThoiGianTaoDon) - 1) / 7) + 1 as tuan,
-      KieuDon as kieuDon,
-      COUNT(*) as "count"
-    FROM DonHang
-    WHERE 
-      ThoiGianTaoDon >= ${new Date(`${nam}-${thang}-01`)}
-      AND ThoiGianTaoDon < DATEADD(month, 1, ${new Date(`${nam}-${thang}-01`)})
-    GROUP BY 
-      ((DAY(ThoiGianTaoDon) - 1) / 7) + 1,
-      KieuDon
-    ORDER BY 
-      tuan, kieuDon
-  `;
-    console.log(raws);
+  SELECT 
+    CAST(((DAY(ThoiGianTaoDon) - 1) / 7) + 1 AS INT) AS tuan,
+    KieuDon as kieuDon,
+    COUNT(*) as "count"
+  FROM DonHang
+  WHERE 
+    ThoiGianTaoDon >= ${startDate}
+    AND ThoiGianTaoDon < ${endDate}
+  GROUP BY 
+    CAST(((DAY(ThoiGianTaoDon) - 1) / 7) + 1 AS INT),
+    KieuDon
+  ORDER BY 
+    tuan, kieuDon;
+`;
+
     return raws;
   }
   async getListDonHang(

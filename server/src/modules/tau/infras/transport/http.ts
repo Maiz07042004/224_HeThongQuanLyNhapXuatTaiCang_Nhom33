@@ -4,7 +4,7 @@ import { ITauRepository } from "../../interface";
 export class TauHttpService {
   constructor(private readonly repo: ITauRepository) {}
   async getSoChuyenTauByIds(req: Request, res: Response) {
-    const ids = req.params.ids;
+    const ids = req.query.ids as string;
     const soChuyenTaus = await this.repo.getSoChuyenTauByIds(
       ids.split(",").map(Number)
     );

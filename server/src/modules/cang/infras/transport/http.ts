@@ -44,7 +44,7 @@ export class CangHttpService {
 
   //RPC
   async getCangDenByIdsAPI(req: Request, res: Response) {
-    const { ids } = req.params;
+    const ids = req.query.ids as string;
     try {
       const cangDens = await this.repo.getCangDenByIds(
         ids.split(",").map((id) => Number(id))
@@ -56,9 +56,9 @@ export class CangHttpService {
           (quocGia) => quocGia.ID === cangDen.IDQuocGia
         );
         return {
-          id: cangDen.ID,
-          ten: cangDen.Ten,
-          quocGia: quocGia?.Ten,
+          ID: cangDen.ID,
+          Ten: cangDen.Ten,
+          QuocGia: quocGia?.Ten,
         };
       });
       res.status(200).json({

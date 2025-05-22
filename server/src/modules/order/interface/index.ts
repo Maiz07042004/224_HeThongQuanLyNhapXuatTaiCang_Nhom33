@@ -1,5 +1,11 @@
 import { PagingDTO } from "@/share/models/paging";
-import { DonHang } from "../model/DonHang";
+import {
+  DonHang,
+  DonHang_CangDen,
+  DonHang_LoaiHang,
+  DonHang_SoChuyenTau,
+  DonHang_User,
+} from "../model/DonHang";
 import {
   DonHangCondDTO,
   ThongKeDonHangTheoThangRawDTO,
@@ -17,12 +23,30 @@ export interface IDonHangRepository {
   getListDonHang(cond: DonHangCondDTO, page: PagingDTO): Promise<DonHang[]>;
 }
 
+export interface ICangQueryRepository {
+  getListCangDenByIds(ids: number[]): Promise<DonHang_CangDen[]>;
+}
+export interface IUserQueryRepository {
+  getListUserByIds(ids: number[]): Promise<DonHang_User[]>;
+}
+export interface ILoaiHangQueryRepository {
+  getListLoaiHangByIds(ids: number[]): Promise<DonHang_LoaiHang[]>;
+}
+export interface ISoChuyenTauQueryRepository {
+  getListSoChuyenTauByIds(ids: number[]): Promise<DonHang_SoChuyenTau[]>;
+}
+
 export interface ThongKeDonHangTheoThangQuery {
   nam: number;
 }
 export interface ThongKeDonHangTheoTuanQuery {
   thang: number;
   nam: number;
+}
+
+export interface GetListDonHangTheoThoiGianQuery {
+  cond: DonHangCondDTO;
+  page: PagingDTO;
 }
 
 export interface ICommandHandler<Cmd, Result> {

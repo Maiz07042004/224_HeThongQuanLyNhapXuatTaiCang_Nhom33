@@ -6,13 +6,15 @@ export enum TrangThaiDonHang {
   DangVanChuyen = "DangVanChuyen",
   HoanThanh = "HoanThanh",
   DaHuy = "DaHuy",
+  ChoXuat = "CHO_XUAT",
+  DaXuat = "DA_XUAT",
   // Thêm trạng thái khác nếu cần
 }
 export enum KieuDon {
   NhapKhau = "Nhập khẩu",
   XuatKhau = "Xuất khẩu",
 }
-export const CangDenSchema = z.object({});
+
 export const DonHangSchema = z.object({
   ID: z.number().int().positive(), // ID INT PRIMARY KEY
   MaVanDon: z.string().min(1), // MaVanDon NVARCHAR(100)
@@ -40,3 +42,31 @@ export const DonHangSchema = z.object({
 });
 
 export type DonHang = z.infer<typeof DonHangSchema>;
+
+export const DonHang_CangDenSchema = z.object({
+  ID: z.number().int().positive(), // ID INT PRIMARY KEY
+  Ten: z.string().min(1), // Ten NVARCHAR(100)
+  QuocGia: z.string().min(1),
+});
+export type DonHang_CangDen = z.infer<typeof DonHang_CangDenSchema>;
+
+export const DonHang_SoChuyenTauSchema = z.object({
+  ID: z.number().int().positive(), // ID INT PRIMARY KEY
+  MaChuyenTau: z.string().min(1), // MaSoChuyen NVARCHAR(100)
+  ThoiGian: z.date(),
+  TenTau: z.string().min(1), // TenTau NVARCHAR(100)
+  HangTau: z.string().min(1), // HangTau NVARCHAR(100)
+});
+export type DonHang_SoChuyenTau = z.infer<typeof DonHang_SoChuyenTauSchema>;
+
+export const DonHang_LoaiHangSchema = z.object({
+  ID: z.number().int().positive(), // ID INT PRIMARY KEY
+  Ten: z.string().min(1), // Ten NVARCHAR(100)
+});
+export type DonHang_LoaiHang = z.infer<typeof DonHang_LoaiHangSchema>;
+
+export const DonHang_UserSchema = z.object({
+  ID: z.number().int().positive(), // ID INT PRIMARY KEY
+  Ten: z.string().min(1), // Ten NVARCHAR(100)
+});
+export type DonHang_User = z.infer<typeof DonHang_UserSchema>;

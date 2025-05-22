@@ -28,7 +28,7 @@ export class DanhMucChungHttpService {
   }
   async getLoaiHangByIdsAPI(req: Request, res: Response) {
     try {
-      const ids = req.params.ids;
+      const ids = req.query.ids as string;
       const loaiHangs = await this.repository.getLoaiHangByIds(
         ids.split(",").map((id) => Number(id))
       );

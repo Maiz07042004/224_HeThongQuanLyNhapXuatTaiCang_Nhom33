@@ -71,6 +71,7 @@ export function ChartAreaInteractive(props: ChartAreaInteractiveProps) {
     const clickedThang = e.activePayload?.[0]?.payload?.thang;
     if (isNaN(clickedThang)) return;
     setMonth(clickedThang);
+    setYear(year);
     setChartMode("weekly");
   };
 
