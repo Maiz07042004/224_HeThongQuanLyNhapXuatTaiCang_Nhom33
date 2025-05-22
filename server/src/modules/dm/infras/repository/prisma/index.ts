@@ -14,4 +14,14 @@ export class PrismaDanhMucChungRepository implements IDanhMucChungRepository {
     if (!loaiHang) return null;
     return result;
   }
+  async getLoaiHangByIds(ids: number[]): Promise<LoaiHang[]> {
+    const loaiHangs = await this.prisma.loaiHang.findMany({
+      where: { ID: { in: ids } },
+    });
+    const result: LoaiHang[] = loaiHangs.map((loaiHang) => ({
+      ID: loaiHang.ID,
+      Ten: loaiHang.Ten as string,
+    }));
+    return result;
+  }
 }

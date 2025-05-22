@@ -2,6 +2,7 @@ import { LoaiHang } from "../model/index";
 
 export interface IDanhMucChungRepository {
   getLoaiHangById(id: number): Promise<LoaiHang | null>;
+  getLoaiHangByIds(ids: number[]): Promise<LoaiHang[]>;
 }
 
 export interface GetLoaiHangQuery {
