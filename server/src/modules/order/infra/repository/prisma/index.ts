@@ -81,15 +81,15 @@ export class PrismaDonHangRepository implements IDonHangRepository {
       };
     }
 
-    // Thêm phân trang
-    const skip = (page.page - 1) * page.limit;
-    const take = page.limit;
+    // // Thêm phân trang
+    // const skip = (page.page - 1) * page.limit;
+    // const take = page.limit;
 
     return this.prisma.donHang
       .findMany({
         where: whereCondition,
-        skip,
-        take,
+        // skip,
+        // take,
         orderBy: {
           ThoiGianTaoDon: "desc", // Sắp xếp mới nhất trước
         },

@@ -30,12 +30,12 @@ const data = {
   navMain: [
     {
       title: "Thống kê",
-      url: "#",
+      url: "/admin/thongke",
       icon: IconDashboard,
     },
     {
       title: "Quản lý nhân viên",
-      url: "#",
+      url: "/admin/quanlynhanvien",
       icon: IconListDetails,
     },
   ],

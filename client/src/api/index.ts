@@ -16,3 +16,19 @@ export const getDataThongKeTheoThang = async (nam: number, thang: number) => {
   }
   return response.json();
 };
+export const getDataTableTheoNam = async (nam: number) => {
+  const res = await fetch(`http://localhost:3000/v1/donhang/list?nam=${nam}`);
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+};
+export const getDataTableTheoThang = async (nam: number, thang: number) => {
+  const res = await fetch(
+    `http://localhost:3000/v1/donhang/list?nam=${nam}&&thang=${thang}`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+};

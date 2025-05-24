@@ -37,7 +37,7 @@ import {
 // import { TrendingUp } from "lucide-react";
 import { CategoricalChartState } from "recharts/types/chart/types";
 import { Tooltip } from "@radix-ui/react-tooltip";
-import { DataApi } from "@/app/dashboard/page";
+import { DataApi } from "@/app/dashboard/thongke";
 // import { set } from "zod";
 
 export const description = "An interactive area chart";
@@ -58,11 +58,13 @@ type ChartAreaInteractiveProps = {
   chartMode: "monthly" | "weekly";
   year: number;
   setYear: (year: number) => void;
+  setOldYear: (year: number) => void;
   setMonth: (month: number) => void;
   setChartMode: (mode: "monthly" | "weekly") => void;
 };
 export function ChartAreaInteractive(props: ChartAreaInteractiveProps) {
-  const { data, chartMode, year, setYear, setMonth, setChartMode } = props;
+  const { data, chartMode, year, setYear, setMonth, setChartMode, setOldYear } =
+    props;
   const handleClick = async (e: CategoricalChartState) => {
     if (!e?.activePayload?.length) return;
     const clickedThangLabel = e.activePayload?.[0]?.payload?.month;
@@ -89,6 +91,7 @@ export function ChartAreaInteractive(props: ChartAreaInteractiveProps) {
             onClick={() => {
               setChartMode("monthly");
               setYear(year);
+              setOldYear(year - 1);
             }}
           >
             ← Quay lại theo tháng
@@ -97,7 +100,10 @@ export function ChartAreaInteractive(props: ChartAreaInteractiveProps) {
         <div className="absolute right-4 top-4">
           <Select
             value={String(year)}
-            onValueChange={(val) => setYear(Number(val))}
+            onValueChange={(val) => {
+              setYear(Number(val));
+              setOldYear(Number(val) - 1);
+            }}
           >
             <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="Năm" />
