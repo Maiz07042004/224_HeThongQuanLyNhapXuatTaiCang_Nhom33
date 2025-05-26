@@ -9,6 +9,8 @@ import { RPCDonHangLoaiHangRepository } from "./infra/repository/rpc/loaiHang";
 import { RPPCDonHangSoChuyenTauRepo } from "./infra/repository/rpc/soChuyenTau";
 import { RPCDonHangUserRepo } from "./infra/repository/rpc/user";
 import { getListDonHangTheoThoiGian } from "./usecase/getDonHangTheoThoiGian";
+import { thongKeDonHangTheoHangTauQuery } from "./usecase/thongKeDonHangTheoHangTau";
+import { thongKeDonHangTheoCangDenQuery } from "./usecase/thongKeDonHangTheoCangDen";
 
 export const setupDonHangModuleHexagonal = (prisma: PrismaClient) => {
   const repo = new PrismaDonHangRepository(prisma);
@@ -19,6 +21,12 @@ export const setupDonHangModuleHexagonal = (prisma: PrismaClient) => {
     repo
   );
   const getListDonHangTheoThoiGianQueryHandler = new getListDonHangTheoThoiGian(
+    repo
+  );
+  const thongKeTheoHangTauQueryHandle = new thongKeDonHangTheoHangTauQuery(
+    repo
+  );
+  const thongKeTheoCangDenQueryHandle = new thongKeDonHangTheoCangDenQuery(
     repo
   );
   const cangRPCRepo = new RPCDonHangCangRepo("http://localhost:3000");
@@ -33,6 +41,8 @@ export const setupDonHangModuleHexagonal = (prisma: PrismaClient) => {
     thongKeTheoThangQueryHandle,
     thongKeTheoTuanQueryHandle,
     getListDonHangTheoThoiGianQueryHandler,
+    thongKeTheoHangTauQueryHandle,
+    thongKeTheoCangDenQueryHandle,
     cangRPCRepo,
     soChuyenTauRPCRepo,
     loaiHangRPCRepo,
@@ -51,6 +61,14 @@ export const setupDonHangModuleHexagonal = (prisma: PrismaClient) => {
   router.get(
     "/donhang/list",
     httpService.getListDonHangTheoNamAPI.bind(httpService)
+  );
+  router.get(
+    "/donhang/thongke-hangtau/:nam",
+    httpService.thongKeDonHangTheoHangTauAPI.bind(httpService)
+  );
+  router.get(
+    "/donhang/thongke-cangden/:nam",
+    httpService.thongKeDonHangTheoCangDenAPI.bind(httpService)
   );
   return router;
 };

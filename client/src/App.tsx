@@ -1,21 +1,26 @@
 import "./App.css";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import Dashboard from "./app/dashboard/dashboard";
-import Thongke from "@/app/dashboard/thongke";
+
+import Login from "@/app/login/login";
+import DashboardLayout from "./app/dashboard/DashboardLayout";
+import Thongke from "./app/dashboard/thongke";
+import { ToastContainer } from "react-toastify";
+import Home from "./app/home/home";
 
 function App() {
   return (
-    <BrowserRouter>
-      <SidebarProvider>
+    <>
+      <BrowserRouter>
         <Routes>
-          <Route path="/admin" element={<Dashboard />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<DashboardLayout />}>
             <Route path="thongke" element={<Thongke />} />
           </Route>
         </Routes>
-      </SidebarProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 }
 

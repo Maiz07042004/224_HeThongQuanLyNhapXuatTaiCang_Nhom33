@@ -1,13 +1,23 @@
 "use client";
 
+// import {
+//   Bar,
+//   BarChart,
+//   CartesianGrid,
+//   XAxis,
+//   ResponsiveContainer,
+//   Legend,
+//   YAxis,
+// } from "recharts";
 import {
-  Bar,
-  BarChart,
+  Line,
+  LineChart,
   CartesianGrid,
   XAxis,
   ResponsiveContainer,
   Legend,
   YAxis,
+  Tooltip,
 } from "recharts";
 
 // import { useIsMobile } from "@/hooks/use-mobile";
@@ -36,8 +46,8 @@ import {
 // import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 // import { TrendingUp } from "lucide-react";
 import { CategoricalChartState } from "recharts/types/chart/types";
-import { Tooltip } from "@radix-ui/react-tooltip";
 import { DataApi } from "@/app/dashboard/thongke";
+
 // import { set } from "zod";
 
 export const description = "An interactive area chart";
@@ -118,23 +128,31 @@ export function ChartAreaInteractive(props: ChartAreaInteractiveProps) {
       </CardHeader>
       <CardContent className="h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data.data} onClick={handleClick}>
+          <LineChart data={data.data} onClick={handleClick}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey={chartMode === "monthly" ? "month" : "week"} />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar
+            <Line
+              type="monotone"
               dataKey="nhap"
-              fill={chartConfig.nhap.color}
+              stroke={chartConfig.nhap.color}
               name={chartConfig.nhap.label}
+              strokeWidth={2}
+              dot={{ r: 3 }}
+              activeDot={{ r: 5 }}
             />
-            <Bar
+            <Line
+              type="monotone"
               dataKey="xuat"
-              fill={chartConfig.xuat.color}
+              stroke={chartConfig.xuat.color}
               name={chartConfig.xuat.label}
+              strokeWidth={2}
+              dot={{ r: 3 }}
+              activeDot={{ r: 5 }}
             />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>

@@ -20,11 +20,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+const ten = localStorage.getItem("ten");
+const email = localStorage.getItem("email");
 
 const data = {
   user: {
-    name: "Mai Dang",
-    email: "dangmai19112016@gmail.com",
+    name: ten || "",
+    email: email || "",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [

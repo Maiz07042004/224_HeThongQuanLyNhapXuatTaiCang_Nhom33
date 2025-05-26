@@ -16,7 +16,7 @@ export const UserAccountSchema = z.object({
   NgaySinh: z.date(),
   GioiTinh: z.nativeEnum(GioiTinh),
   Cccd: z.string().max(20),
-  Sdt: z.string().max(20),
+  SDT: z.string().max(20),
   Email: z.string().email().max(100),
   DiaChi: z.string().max(200),
   TrangThai: z.nativeEnum(TrangThai),

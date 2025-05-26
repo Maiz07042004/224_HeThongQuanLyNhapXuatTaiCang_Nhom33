@@ -1,11 +1,11 @@
 import { IUserRepository } from "@/modules/user/interface";
 import { GioiTinh, TrangThai, UserAccount } from "@/modules/user/model";
-import { UserLoginDto } from "@/modules/user/model/dto";
+import { UserLoginDto, UserLoginResponseDto } from "@/modules/user/model/dto";
 import { PrismaClient } from "@prisma/client";
 
 export class PrismaUserRepository implements IUserRepository {
   constructor(private prisma: PrismaClient) {}
-  async login(data: UserLoginDto): Promise<string> {
+  async login(data: UserLoginDto): Promise<UserLoginResponseDto> {
     const user = await this.prisma.userAccount.findFirst({
       where: {
         Email: data.Email,
@@ -17,7 +17,21 @@ export class PrismaUserRepository implements IUserRepository {
     if (user.MatKhau !== data.MatKhau) {
       throw new Error("Mật khẩu sai");
     }
-    return "success";
+    const chucVu = await this.prisma.chucVu.findFirst({
+      where: {
+        ID: user.IDChucVu || undefined,
+      },
+    });
+
+    return {
+      Email: user.Email || "",
+      ChucVu: chucVu?.Ten || "",
+      DiaChi: user.DiaChi || "",
+      GioiTinh: (user.GioiTinh as GioiTinh) || "Nam",
+      NgaySinh: user.NgaySinh || new Date(),
+      SDT: user.SDT || "",
+      Ten: user.Ten || "",
+    };
   }
   async getListUserByIds(ids: number[]): Promise<UserAccount[]> {
     const users = await this.prisma.userAccount.findMany({
@@ -38,7 +52,7 @@ export class PrismaUserRepository implements IUserRepository {
       DiaChi: user.DiaChi || "",
       TrangThai: (user.TrangThai as TrangThai) || "Hoạt động",
       Cccd: user.CCCD || "",
-      Sdt: user.SDT || "",
+      SDT: user.SDT || "",
     }));
     return result;
   }

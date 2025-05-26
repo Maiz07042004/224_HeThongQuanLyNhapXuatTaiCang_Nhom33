@@ -10,6 +10,8 @@ import {
   DonHangCondDTO,
   ThongKeDonHangTheoThangRawDTO,
   ThongKeDonHangTheoTuanRawDTO,
+  ThongKeSoLuongDonTheoCangDenRawDTO,
+  ThongKeSoLuongDonTheoHangTauRawDTO,
 } from "../model/dto";
 
 export interface IDonHangRepository {
@@ -21,6 +23,12 @@ export interface IDonHangRepository {
     nam: number
   ): Promise<ThongKeDonHangTheoTuanRawDTO[]>;
   getListDonHang(cond: DonHangCondDTO, page: PagingDTO): Promise<DonHang[]>;
+  thongKeDonHangTheoHangTau(
+    nam: number
+  ): Promise<ThongKeSoLuongDonTheoHangTauRawDTO[]>;
+  thongKeDonHangTheoCangDen(
+    nam: number
+  ): Promise<ThongKeSoLuongDonTheoCangDenRawDTO[]>;
 }
 
 export interface ICangQueryRepository {

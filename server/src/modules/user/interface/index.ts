@@ -1,8 +1,8 @@
 import { UserAccount } from "../model";
-import { UserLoginDto } from "../model/dto";
+import { UserLoginDto, UserLoginResponseDto } from "../model/dto";
 
 export interface IUserRepository {
-  login(data: UserLoginDto): Promise<string>;
+  login(data: UserLoginDto): Promise<UserLoginResponseDto>;
   getListUserByIds(ids: number[]): Promise<UserAccount[]>;
 }
 

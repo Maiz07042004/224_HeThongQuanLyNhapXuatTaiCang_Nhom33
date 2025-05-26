@@ -1,9 +1,11 @@
 import { IQueryHandler, IUserRepository } from "../interface";
-import { UserLoginDto } from "../model/dto";
+import { UserLoginDto, UserLoginResponseDto } from "../model/dto";
 
-export class Login implements IQueryHandler<UserLoginDto, string> {
+export class Login
+  implements IQueryHandler<UserLoginDto, UserLoginResponseDto>
+{
   constructor(private readonly repo: IUserRepository) {}
-  async execute(query: UserLoginDto): Promise<string> {
+  async execute(query: UserLoginDto): Promise<UserLoginResponseDto> {
     try {
       const result = await this.repo.login(query);
       return result;

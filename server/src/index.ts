@@ -7,6 +7,7 @@ import { setupDanhMucChungHexagon } from "./modules/dm";
 import { setupCangHexagon } from "./modules/cang";
 import { setupTauHexagonal } from "./modules/tau";
 import { setupUserServiceHexagonal } from "./modules/user";
+import { setupContainerModuleHexagonal } from "./modules/container";
 
 const prisma = new PrismaClient();
 const app = express();
@@ -19,6 +20,7 @@ app.use("/v1", setupDanhMucChungHexagon(prisma));
 app.use("/v1", setupCangHexagon(prisma));
 app.use("/v1", setupTauHexagonal(prisma));
 app.use("/v1", setupUserServiceHexagonal(prisma));
+app.use("/v1", setupContainerModuleHexagonal(prisma));
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

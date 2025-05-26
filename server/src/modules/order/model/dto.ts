@@ -38,3 +38,19 @@ export type DonHangCondDTO = {
   thang?: number;
   nam?: number;
 };
+
+export const ThongKeSoLuongDonTheoHangTauRawDTOSchema = z.object({
+  hangTau: z.string(),
+  soLuongDon: z.number().int().positive(),
+});
+export type ThongKeSoLuongDonTheoHangTauRawDTO = z.infer<
+  typeof ThongKeSoLuongDonTheoHangTauRawDTOSchema
+>;
+
+export const ThongKeSoLuongDonTheoCangDenRawDTOSchema = z.object({
+  cangDen: z.string(),
+  soLuongDon: z.number().int().positive(),
+});
+export type ThongKeSoLuongDonTheoCangDenRawDTO = z.infer<
+  typeof ThongKeSoLuongDonTheoCangDenRawDTOSchema
+>;

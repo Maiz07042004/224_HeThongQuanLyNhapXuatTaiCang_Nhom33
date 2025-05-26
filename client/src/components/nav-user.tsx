@@ -1,16 +1,16 @@
 import {
-  IconCreditCard,
+  // IconCreditCard,
   IconDotsVertical,
   IconLogout,
-  IconNotification,
-  IconUserCircle,
+  // IconNotification,
+  // IconUserCircle,
 } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
+  // DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -22,6 +22,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function NavUser({
   user,
@@ -32,8 +34,15 @@ export function NavUser({
     avatar: string;
   };
 }) {
+  const ten = useState(localStorage.getItem("ten"))[0];
+  const email = useState(localStorage.getItem("email"))[0];
+  user.name = ten || user.name;
+  user.email = email || user.email;
+  const navigate = useNavigate();
   const { isMobile } = useSidebar();
-
+  const handleLogout = () => {
+    navigate("/", { replace: true });
+  };
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -77,7 +86,7 @@ export function NavUser({
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
+            {/* <DropdownMenuGroup>
               <DropdownMenuItem>
                 <IconUserCircle />
                 Account
@@ -90,9 +99,9 @@ export function NavUser({
                 <IconNotification />
                 Notifications
               </DropdownMenuItem>
-            </DropdownMenuGroup>
+            </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <IconLogout />
               Đăng xuất
             </DropdownMenuItem>

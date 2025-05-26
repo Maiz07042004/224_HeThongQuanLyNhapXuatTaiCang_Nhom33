@@ -12,6 +12,8 @@ import {
 import {
   ThongKeDonHangTheoThangDTO,
   ThongKeDonHangTheoTuanDTO,
+  ThongKeSoLuongDonTheoCangDenRawDTO,
+  ThongKeSoLuongDonTheoHangTauRawDTO,
 } from "../../model/dto";
 import {
   DonHang,
@@ -34,6 +36,14 @@ export class DonHangHttpService {
     private readonly getListDonHangTheoThoiGian: IQueryHandler<
       GetListDonHangTheoThoiGianQuery,
       DonHang[]
+    >,
+    private readonly thongKeDonHangTheoHangTauQueryHandle: IQueryHandler<
+      number,
+      ThongKeSoLuongDonTheoHangTauRawDTO[]
+    >,
+    private readonly thongKeDonHangTheoCangDenQueryHandle: IQueryHandler<
+      number,
+      ThongKeSoLuongDonTheoCangDenRawDTO[]
     >,
     private readonly RPCCangRepo: ICangQueryRepository,
     private readonly RPCSoChuyenTauRepo: ISoChuyenTauQueryRepository,
@@ -162,6 +172,20 @@ export class DonHangHttpService {
     res.status(200).json({
       status: "success",
       data: donHangsFull,
+    });
+  }
+  async thongKeDonHangTheoHangTauAPI(req: Request, res: Response) {
+    const nam: number = Number(req.params.nam);
+    const result = await this.thongKeDonHangTheoHangTauQueryHandle.query(nam);
+    res.status(200).json({
+      data: result,
+    });
+  }
+  async thongKeDonHangTheoCangDenAPI(req: Request, res: Response) {
+    const nam: number = Number(req.params.nam);
+    const result = await this.thongKeDonHangTheoCangDenQueryHandle.query(nam);
+    res.status(200).json({
+      data: result,
     });
   }
 }

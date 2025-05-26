@@ -8,12 +8,18 @@ import { SidebarInset } from "@/components/ui/sidebar";
 // import data from "./data.json";
 import { useEffect, useState } from "react";
 import {
+  getDataContainerStatistics,
+  getDataPortStats,
+  getDataShippingCompany,
   getDataTableTheoNam,
   getDataTableTheoThang,
   getDataThongKeTheoNam,
   getDataThongKeTheoThang,
 } from "@/api";
 import { z } from "zod";
+import PortStatisticsPage from "./thongkecangden";
+import ShippingCompanyStatisticsPage from "./thongkehangtau";
+import ContainerStatisticsPage from "./ContainerStatisticsPage";
 export type DataChart = {
   thang?: string;
   tuan?: string;
@@ -21,6 +27,18 @@ export type DataChart = {
   xuat: number;
   week?: string;
   month?: string;
+};
+export type DataChartPortStats = {
+  CangDen: string;
+  SoLuongDon: number;
+};
+export type DataChartShippingCompany = {
+  hangTau: string;
+  soLuongDon: number;
+};
+export type DataChartContainer = {
+  kho: string;
+  soLuong: number;
 };
 export type DataApi = {
   data: DataChart[];
@@ -68,6 +86,15 @@ export default function Thongke() {
     totalNhap: 0,
     totalXuat: 0,
   });
+  const [dataChartContainer, setDataChartContainer] = useState<
+    DataChartContainer[]
+  >([]);
+  const [dataChartShippingCompany, setDataChartShippingCompany] = useState<
+    DataChartShippingCompany[]
+  >([]);
+  const [dataChartPortStats, setDataChartPortStats] = useState<
+    DataChartPortStats[]
+  >([]);
   const [month, setMonth] = useState(1);
   const [oldmonth, setOldMonth] = useState(month - 1);
 
@@ -88,12 +115,22 @@ export default function Thongke() {
   useEffect(() => {
     const fetchData = async () => {
       if (chartMode === "monthly") {
-        const [res, resOld, resDataTable] = await Promise.all([
+        const [
+          res,
+          resOld,
+          resDataTable,
+          resContainer,
+          resDataChartShippingCompany,
+          resDataChartPortStats,
+        ] = await Promise.all([
           getDataThongKeTheoNam(year),
           getDataThongKeTheoNam(oldyear),
           getDataTableTheoNam(year),
+          getDataContainerStatistics(),
+          getDataShippingCompany(year),
+          getDataPortStats(year),
         ]);
-        if (res && resOld && resDataTable) {
+        if (res && resOld && resDataTable && resContainer) {
           const data = res.data.map((item: DataChart) => ({
             ...item,
             month: `Tháng ${item.thang}`,
@@ -115,6 +152,13 @@ export default function Thongke() {
           setDataChart(res);
           setOldDataChart(resOld);
           setDataTable(dataTable);
+          setDataChartContainer(resContainer.data as DataChartContainer[]);
+          setDataChartShippingCompany(
+            resDataChartShippingCompany.data as DataChartShippingCompany[]
+          );
+          setDataChartPortStats(
+            resDataChartPortStats.data as DataChartPortStats[]
+          );
         }
       } else {
         const [res, resOld, resDataTable] = await Promise.all([
@@ -156,6 +200,9 @@ export default function Thongke() {
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+            <h1 className="text-2xl font-bold text-center text-primary mt-2 px-4 lg:px-6 ">
+              Thống kê
+            </h1>
             <SectionCards
               data={dataChart}
               oldData={oldDataChart}
@@ -163,23 +210,35 @@ export default function Thongke() {
               oldMonth={oldmonth}
               chartMode={chartMode}
             />
-            <div className="px-4 lg:px-6">
-              <ChartAreaInteractive
-                data={dataChart}
-                chartMode={chartMode}
-                year={year}
-                setYear={setYear}
-                setOldYear={setOldYear}
-                setMonth={setMonth}
-                setChartMode={setChartMode}
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 px-4">
+              {/* Phần biểu đồ và bảng dữ liệu */}
+              <div className="lg:col-span-3">
+                <ChartAreaInteractive
+                  data={dataChart}
+                  chartMode={chartMode}
+                  year={year}
+                  setYear={setYear}
+                  setOldYear={setOldYear}
+                  setMonth={setMonth}
+                  setChartMode={setChartMode}
+                />
+                <DataTable
+                  year={year}
+                  chartMode={chartMode}
+                  month={month}
+                  data={dataTable}
+                />
+              </div>
+
+              {/* 3 thống kê bên phải - mỗi cái 1 hàng đầy đủ chiều rộng */}
+              <div className="lg:col-span-1 flex flex-col gap-4">
+                <PortStatisticsPage data={dataChartPortStats} />
+                <ShippingCompanyStatisticsPage
+                  data={dataChartShippingCompany}
+                />
+                <ContainerStatisticsPage data={dataChartContainer} />
+              </div>
             </div>
-            <DataTable
-              year={year}
-              chartMode={chartMode}
-              month={month}
-              data={dataTable}
-            />
           </div>
         </div>
       </div>

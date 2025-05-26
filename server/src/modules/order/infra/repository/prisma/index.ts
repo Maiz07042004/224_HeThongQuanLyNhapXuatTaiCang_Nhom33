@@ -4,12 +4,33 @@ import {
   DonHangCondDTO,
   ThongKeDonHangTheoThangRawDTO,
   ThongKeDonHangTheoTuanRawDTO,
+  ThongKeSoLuongDonTheoCangDenRawDTO,
+  ThongKeSoLuongDonTheoHangTauRawDTO,
 } from "@modules/order/model/dto";
 import { PagingDTO } from "@share/models/paging";
 import { PrismaClient } from "@prisma/client";
 
 export class PrismaDonHangRepository implements IDonHangRepository {
   constructor(private prisma: PrismaClient) {}
+  async thongKeDonHangTheoCangDen(
+    nam: number
+  ): Promise<ThongKeSoLuongDonTheoCangDenRawDTO[]> {
+    return await this.prisma.$queryRaw<ThongKeSoLuongDonTheoCangDenRawDTO[]>`
+    SELECT 
+      CD.Ten AS CangDen,
+      COUNT(DH.ID) AS SoLuongDon
+    FROM 
+      DonHang DH
+    JOIN 
+      CangDen CD ON DH.IDCangDen = CD.ID
+    WHERE 
+      YEAR(DH.ThoiGianTaoDon) = ${nam}
+    GROUP BY 
+      CD.Ten
+    ORDER BY 
+      SoLuongDon DESC
+  `;
+  }
   async thongKeDonHangTheoThang(
     nam: number
   ): Promise<ThongKeDonHangTheoThangRawDTO[]> {
@@ -54,6 +75,29 @@ export class PrismaDonHangRepository implements IDonHangRepository {
 `;
 
     return raws;
+  }
+  async thongKeDonHangTheoHangTau(
+    nam: number
+  ): Promise<ThongKeSoLuongDonTheoHangTauRawDTO[]> {
+    return await this.prisma.$queryRaw<ThongKeSoLuongDonTheoHangTauRawDTO[]>`
+    SELECT 
+      HT.Ten AS hangTau,
+      COUNT(DH.ID) AS soLuongDon
+    FROM 
+      DonHang DH
+    JOIN 
+      SoChuyenTau SCT ON DH.IDSoChuyenTau = SCT.ID
+    JOIN 
+      Tau T ON SCT.IDTau = T.ID
+    JOIN 
+      HangTau HT ON T.IDHangTau = HT.ID
+    WHERE
+      YEAR(DH.ThoiGianTaoDon) = ${nam}
+    GROUP BY 
+      HT.Ten
+    ORDER BY 
+      soLuongDon DESC;
+  `;
   }
   async getListDonHang(
     cond: DonHangCondDTO,
