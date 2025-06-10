@@ -1,0 +1,89 @@
+.img-movie {
+	width: 160px;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.box-movie-center {
+	background-color: #fff;
+}
+
+.error-message {
+	font-size: 28px;
+	color: red;
+	font-family: arial;
+	margin: 0 0 5px 10px;
+	width: 100%;
+}
+
+.box-wrapper {
+	padding: 30px 70px 70px 70px;
+}
+
+.box-movie {
+	padding-left: 15px;
+}
+
+.text-show-time {
+	text-align: center;
+	font-size: 32px;
+	font-weight: bold;
+	font-family: arial;
+/* 	padding: 30px; */
+}
+
+.text-movie-name {
+	font-size: 26px;
+	color: #337ab7;
+	font-family: arial;
+	display: block;
+}
+
+.label-attribute {
+	font-weight: bold;
+	font-family: arial;
+	margin: 2px 0 0 10px;
+}
+
+.input-search {
+	margin: 0 0 5px 10px;
+	font-family: arial;
+}
+
+.label-number {
+	color: #4caf50;
+	font-weight: bold;
+	font-family: arial;
+	margin: 0 0 0 10px;
+}
+
+.label-value {
+	font-family: arial;
+	margin: 0 0 0 10px;
+}
+
+.label-seat {
+	padding-bottom: 5px;
+}
+
+.label-member {
+	margin-top: 20px;
+}
+
+.label-score {
+	margin-top: 5px;
+}
+
+.input-radio-score {
+	margin-left: 10px;
+}
+
+.button-confirm {
+	float: right;
+}
+
+.button-check {
+	margin: 0px 10px;
+}
