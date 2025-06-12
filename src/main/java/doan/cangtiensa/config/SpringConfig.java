@@ -30,7 +30,7 @@ public class SpringConfig {
 	DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		dataSource.setUrl("jdbc:sqlserver://DESKTOP-6754H25:1433; databaseName=OnlineShopping;user=sa;password=123123;"
+		dataSource.setUrl("jdbc:sqlserver://DESKTOP-6754H25:1433; databaseName=CangTienSa;user=sa;password=123123;"
 				+ "encrypt=true;trustServerCertificate=true");
 
 		/* dataSource.setUsername("sa"); dataSource.setPassword("123123"); */

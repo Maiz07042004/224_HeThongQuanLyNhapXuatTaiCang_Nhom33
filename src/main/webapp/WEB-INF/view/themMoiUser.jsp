@@ -281,114 +281,95 @@ input[type=password] {
 }
 </style>
 <body>
-	<div class="testbox">
+ 	<div class="testbox">
+ 		<h1>Thêm mới nhân viên</h1>
+ 		<form:form action="${pageContext.request.contextPath}/themUser"
+ 			method="POST" modelAttribute="formUser" id="addEmployeeForm"> <hr>
+ 			<label class="iconlable" id="icon" for="fullName"><i
+ 				class="icon-user"></i></label>
+ 			<input type="text" name="fullName" id="fullName"
+ 				placeholder="Full name" required />
+ 			<label class="iconlable" id="icon" for="phoneNumber"><i
+ 				class="fa fa-phone" aria-hidden="true"></i></label>
+ 				<span id="phoneNumberError" style="color: red; display: none;">Số
+ 							điện thoại không hợp lệ. Phải là 10 chữ số và bắt đầu bằng '0'.</span>
+ 			<input type="text" name="phoneNumber" id="phoneNumber"
+ 				placeholder="Phone number" required />
+ 			<label class="iconlable" id="icon" for="userName"><i
+ 				class="fa fa-user"></i></label>
+ 			<input type="text" name="userName" id="userName"
+ 				placeholder="Username" required />
+ 			<label class="iconlable" id="icon" for="address"><i
+ 				class="fa fa-address-book"></i></label>
+ 			<input type="text" name="address" id="address" placeholder="Address"
+ 				required />
+ 			<label class="iconlable" id="icon" for="password"><i
+ 				class="fa fa-unlock-alt"></i></label>
+ 			<input type="password" name="password" id="password"
+ 				placeholder="Password" required />
+ 			<label class="iconlable" id="icon" for="dateOfBirth"><i
+ 				class="icon-user"></i></label>
+ 			<input type="date" name="dateOfBirth" id="dateOfBirth"
+ 				placeholder="Birth Day" required />
+ 			<label class="iconlable" id="icon" for="email"><i
+ 				class="icon-user"></i></label>
+ 			<input type="text" name="email" id="email" placeholder="Email"
+ 				required />
+ 			<label class="iconlable" id="icon" for="identityCard"><i
+ 				class="fa fa-id-card"></i></label>
+ 			<input type="text" name="identityCard" id="identityCard"
+ 				placeholder="Identity Card" required />
 
-		<h1>Thêm mới nhân viên</h1>
-		<form:form action="${pageContext.request.contextPath}/themUser"
-			method="POST" modelAttribute="formUser" id="formUser">
-			<hr>
-			<%-- 			<div class="accounttype" align="center">
-				<c:if test="${account.roles.roleID eq 1}">
-					<input type="radio" value="1" id="radioOne" name="roleID" />
-					<label for="radioOne" class="radio">Admin</label>
-					<input type="radio" value="2" id="radioTwo" name="roleID" />
-					<label for="radioTwo" class="radio">Nhân viên</label>
-				</c:if>
-				<input type="radio" value="3" id="radioThree" name="roleID" checked />
-				<label for="radioThree" class="radio">Khách hàng</label>
-			</div> --%>
-			<%-- 				<form:select path="roleS.roleID" name="roleID" id="roleID" --%>
-			<%-- 						items="${listRoles1}" class="form-control"> --%>
-			<%-- 					</form:select> --%>
-			<hr>
-			<label class="iconlable" id="icon" for="fullName"><i
-				class="icon-user"></i></label>
-			<input type="text" name="fullName" id="fullName"
-				placeholder="Full name" required />
-			<label class="iconlable" id="icon" for="phoneNumber"><i
-				class="fa fa-phone" aria-hidden="true"></i></label>
-				<span id="phoneNumberError" style="color: red; display: none;">Số
-							điện thoại không hợp lệ.</span>
-			<input type="text" name="phoneNumber" id="phoneNumber"
-				placeholder="Phone number" required />
-			<label class="iconlable" id="icon" for="userName"><i
-				class="fa fa-user"></i></label>
-			<input type="text" name="userName" id="userName"
-				placeholder="Username" required />
-			<label class="iconlable" id="icon" for="address"><i
-				class="fa fa-address-book"></i></label>
-			<input type="text" name="address" id="address" placeholder="Address"
-				required />
-			<label class="iconlable" id="icon" for="password"><i
-				class="fa fa-unlock-alt"></i></label>
-			<input type="password" name="password" id="password"
-				placeholder="Password" required />
-			<label class="iconlable" id="icon" for="dateOfBirth"><i
-				class="icon-user"></i></label>
-			<input type="date" name="dateOfBirth" id="dateOfBirth"
-				placeholder="Birth Day" required />
-			<label class="iconlable" id="icon" for="email"><i
-				class="icon-user"></i></label>
-			<input type="text" name="email" id="email" placeholder="Email"
-				required />
-			<label class="iconlable" id="icon" for="identityCard"><i
-				class="fa fa-id-card"></i></label>
-			<input type="text" name="identityCard" id="identityCard"
-				placeholder="Identity Card" required />
+ 			<div class="gender">
+ 				<input type="radio" value="male" id="male" name="gender" checked />
+ 				<label for="male" class="radio" checked>Male</label> <input
+ 					type="radio" value="female" id="female" name="gender" /> <label
+ 					for="female" class="radio" style="margin-left: 31px;">Female</label>
+ 			</div>
+ 			<div class="accountType">
+ 				<input type="radio" value="2" id="2" name="roleID" checked /> <label
+ 					for="2" class="radio">NV cảng</label> <input type="radio" value="3"
+ 					id="3" name="roleID" /> <label for="3" class="radio"
+ 					style="margin-left: 31px;">NV kiểm định</label>
+ 			</div>
 
-			<div class="gender">
-				<input type="radio" value="male" id="male" name="gender" checked />
-				<label for="male" class="radio" checked>Male</label> <input
-					type="radio" value="female" id="female" name="gender" /> <label
-					for="female" class="radio" style="margin-left: 31px;">Female</label>
-			</div>
-			<div class="accountType">
-				<input type="radio" value="2" id="2" name="roleID" checked /> <label
-					for="2" class="radio">NV cảng</label> <input type="radio" value="3"
-					id="3" name="roleID" /> <label for="3" class="radio"
-					style="margin-left: 31px;">NV kiểm định</label>
-			</div>
+ 			<div class="regist">
+ 				<button type="submit" id="btnn" class=button>Thêm</button>
+ 			</div>
+ 		</form:form>
+ 	</div>
 
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         const phoneNumberRegex = /^0\d{9}$/;
+         const phoneNumberInput = document.getElementById("phoneNumber");
+         const phoneNumberErrorSpan = document.getElementById("phoneNumberError");
+         // Changed this to match the new ID for your form
+         const addEmployeeForm = document.getElementById("addEmployeeForm");
 
-			<div class="regist">
-				<button type="submit" id="btnn" class=button>Thêm</button>
-			</div>
-		</form:form>
-	</div>
+         function validatePhoneNumber() {
+             const phoneNumber = phoneNumberInput.value;
+             if (phoneNumberRegex.test(phoneNumber)) {
+                 phoneNumberErrorSpan.style.display = 'none'; // Hide error if valid
+                 return true;
+             } else {
+                 return false;
+             }
+         }
 
+         // Event listener for form submission
+         addEmployeeForm.addEventListener('submit', function(event) {
+             const isPhoneNumberValid = validatePhoneNumber();
 
-</body>
-<script>
+             if (!isPhoneNumberValid) {
+                 event.preventDefault(); // Prevent form submission
+                 alert("Lỗi: Số điện thoại không hợp lệ. Phải là 10 chữ số và bắt đầu bằng '0'."); // Show alert
+             }
+         });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const phoneNumberRegex = /^0\d{9}$/;
-        const phoneNumberInput = document.getElementById("phoneNumber");
-        const phoneNumberErrorSpan = document.getElementById("phoneNumberError");
-        const updateProfileForm = document.getElementById("formUser");
-
-        function validatePhoneNumber() {
-            const phoneNumber = phoneNumberInput.value;
-            if (phoneNumberRegex.test(phoneNumber)) {
-                phoneNumberErrorSpan.style.display = 'none'; 
-                return true;
-            } else {
-                phoneNumberErrorSpan.style.display = 'inline'; 
-                return false;
-            }
-        }
-
-        updateProfileForm.addEventListener('submit', function(event) {
-
-            const isPhoneNumberValid = validatePhoneNumber();
-
-            if (!isPhoneNumberValid ) {
-                event.preventDefault();
-
-            }
-        });
-
-
-        phoneNumberInput.addEventListener('input', validatePhoneNumber); 
-    });
-</script>
+         // Event listener for real-time validation as user types
+         phoneNumberInput.addEventListener('input', validatePhoneNumber);
+     });
+ </script>
+ </body>
 </html>

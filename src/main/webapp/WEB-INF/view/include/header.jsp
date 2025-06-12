@@ -53,13 +53,13 @@
 					</form>
 				</div>
 				<ul class="nav navbar-nav navbar-right d-flex flex-row">
-					
+
 					<c:if test="${account ne null}">
 						<li><a style="color: white"
 							href="${pageContext.request.contextPath}/logout"><i
 								class="fa fa-sign-out" aria-hidden="true" style="color: white;"></i>
 								Hi, ${account.getAccountID()}</a></li>
-							
+
 					</c:if>
 					<c:if test="${account eq null}">
 						<li><a style="color: white"
@@ -67,7 +67,7 @@
 								class="fa fa-sign-in" aria-hidden="true" style="color: white;"></i>
 								Sign in</a></li>
 					</c:if>
-					
+
 				</ul>
 			</div>
 		</nav>

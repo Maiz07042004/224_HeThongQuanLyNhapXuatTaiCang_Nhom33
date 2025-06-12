@@ -8,17 +8,7 @@
 		<div>
 			<p class="text-show-time">CẬP NHẬT HỒ SƠ</p>
 		</div>
-		<div align="center" style="margin-top: 10px">
-			<c:if test="${param['insert']}">
-				<p style="color: green;">Thêm mới danh mục thành công!</p>
-			</c:if>
-			<c:if test="${param['update']}">
-				<p style="color: green;">Cập nhật hồ sơ thành công!</p>
-			</c:if>
-			<c:if test="${param['delete']}">
-				<p style="color: red;">Danh mục đã được xóa!</p>
-			</c:if>
-		</div>
+		
 		<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 		<div style="margin-top: 10px;">
 			<form:form
