@@ -1,0 +1,144 @@
+hr.screen {
+	border-top: 2px solid gray;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.box-movie-center {
+	background-color: #fff;
+}
+
+.box-wrapper {
+	padding: 20px 70px;
+}
+
+/* The container */
+.container {
+	display: block;
+	position: relative;
+	cursor: pointer;
+	font-size: 22px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+/* Create a custom checkbox */
+.seat-canchoose {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #ebebeb;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #dddddd;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+
+.seat-sold {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #e11c01;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #e11c01;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+
+.seat-vip {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #3c9becd9;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #3c9bec;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .seat-canchoose {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #b1dd77;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #7dc71d;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+
+.container:hover input ~ .seat-vip {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #b1dd77;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #7dc71d;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+/* When the checkbox is checked*/
+.container input:checked ~ .seat-canchoose {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #b1dd77;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #7dc71d;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+
+.container input:checked ~ .seat-vip {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #b1dd77;
+	border-radius: 7px;
+	text-align: center;
+	border: 2px solid;
+	border-color: #7dc71d;
+	border-width: 2px 6px 10px 6px;
+	height: 40px;
+	width: 50px;
+}
+
+.seat-id {
+	color: gray;
+	font-size: 18px;
+}
+
+.table td {
+	border-top: 0px;
+	padding: 20px 15px;
+}

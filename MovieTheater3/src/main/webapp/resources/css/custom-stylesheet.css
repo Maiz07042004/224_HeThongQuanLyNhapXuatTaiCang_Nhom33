@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+.divMain {
+	width: 600px; 
+	margin: 20px 0 0 350px;
+	border: 1px solid #238718;;
+	border-radius: 15px;
+	padding: 5px;
+}
+
+.headerMain {
+	color: #fff;
+	text-align: center;
+	border-radius: 15px;
+	padding: 5px;
+	background-color: #238718;
+}
+
+.tableDS {
+	width: 1100px; 
+	margin: 50px 0 0 90px;
+	border: 1px solid #238718;;
+	border-radius: 15px;
+	padding: 5px;
+}
